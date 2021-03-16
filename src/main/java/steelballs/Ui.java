@@ -7,15 +7,14 @@ public class Ui {
 
     public Ui() {
         JFrame jFrame = new JFrame("SteelBalls");
-        BallContainer ballContainer =  new BallContainer();
-
-        jFrame.add(ballContainer);
         jFrame.pack();
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jFrame.setBackground(Color.PINK);
         jFrame.setVisible(true);
-        jFrame.setResizable(false);
+        jFrame.setSize(1000,1000);
         jFrame.setLocationRelativeTo(null);
+        BallContainer ballContainer =  new BallContainer(jFrame);
+        jFrame.add(ballContainer);
 
 
         while (true){

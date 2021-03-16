@@ -13,8 +13,12 @@ public class Ball extends Thread{
     private int speedY;
     private Color ballColor;
     private int radius;
+    private int width;
+    private int height;
 
-    public Ball(double x, double y, int radius, int speedX, int speedY) {
+    public Ball(double x, double y, int radius, int speedX, int speedY, int width, int height) {
+        this.width = width;
+        this.height = height;
         this.radius = radius;
         this.ballColor = getRandomColor();
         this.speedX = speedX;
@@ -38,13 +42,13 @@ public class Ball extends Thread{
     }
 
     private void updateBallPosition() {
-        if (ballCoordinates.getX() + radius >= 1000 - speedX) {
+        if (ballCoordinates.getX() + radius >= width-(width*0.01)-speedX) {
             speedX *= -1;
-            ballCoordinates.setLocation(1000 - radius, ballCoordinates.getY() + speedY);
-        } else if (ballCoordinates.getY() + radius >= 1000 - speedY) {
+            ballCoordinates.setLocation(width-(width*0.01) - radius, ballCoordinates.getY() + speedY);
+        } else if (ballCoordinates.getY() + radius >= height-(height*0.035) -speedY) {
             speedY *= -1;
             ballCoordinates.setLocation(ballCoordinates.getX() + speedX,
-                    1000 - radius);
+                    height-(height*0.035) - radius);
         } else if (ballCoordinates.getX() <= 0){
             speedX *= -1;
             ballCoordinates.setLocation( speedX, ballCoordinates.getY() + speedY);
@@ -55,7 +59,6 @@ public class Ball extends Thread{
         } else {
             ballCoordinates.setLocation(ballCoordinates.getX()+speedX, ballCoordinates.getY()+speedY);
         }
-
         setCurrentBallPosition();
     }
 

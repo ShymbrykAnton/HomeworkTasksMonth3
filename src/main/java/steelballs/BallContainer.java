@@ -8,10 +8,12 @@ import java.util.ArrayList;
 public class BallContainer extends JPanel {
     private final ArrayList<Ball> balls;
     private final MouseAdapter mouseListener;
+    private final JFrame frame;
 
-    public BallContainer(){
+    public BallContainer(JFrame frame){
+        this.frame = frame;
         balls = new ArrayList<>();
-        mouseListener = new BallListener(balls);
+        mouseListener = new BallListener(balls, frame);
         this.addMouseListener(mouseListener);
     }
 
@@ -21,7 +23,7 @@ public class BallContainer extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(1000, 1000);
+        return new Dimension(frame.getWidth(), frame.getHeight());
     }
 
     @Override
