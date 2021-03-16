@@ -11,8 +11,19 @@ public class Ui {
         jFrame.setSize(1000, 1000);
         jFrame.setResizable(false);
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        Container container =  new Container();
+        container.addMouseListener(new BallListener());
+        jFrame.add(container);
         jFrame.setLocationRelativeTo(null);
-        jFrame.add(new Canvas(), BorderLayout.CENTER);
+        while (true){
+            jFrame.repaint();
+            container.moveBall();
+        }
+
+    }
+
+    public static void main(String[] args) {
+        Ui ui = new Ui();
     }
 
 }
