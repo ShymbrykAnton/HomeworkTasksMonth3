@@ -1,10 +1,9 @@
-package painterballs2;
+package painterballs3;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class BallContainer extends JPanel {
