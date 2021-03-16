@@ -1,25 +1,32 @@
 package steelballs;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
 public class Ui {
+
     public Ui() {
         JFrame jFrame = new JFrame("SteelBalls");
-        jFrame.setVisible(true);
-        jFrame.setSize(1000, 1000);
-        jFrame.setResizable(false);
+        BallContainer ballContainer =  new BallContainer();
+
+        jFrame.add(ballContainer);
+        jFrame.pack();
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        Container container =  new Container();
-        container.addMouseListener(new BallListener());
-        jFrame.add(container);
+        jFrame.setBackground(Color.PINK);
+        jFrame.setVisible(true);
+        jFrame.setResizable(false);
         jFrame.setLocationRelativeTo(null);
+
+
         while (true){
             jFrame.repaint();
-            container.moveBall();
+            ballContainer.moveBall();
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-
     }
 
     public static void main(String[] args) {

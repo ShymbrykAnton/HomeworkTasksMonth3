@@ -2,62 +2,87 @@ package steelballs;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 
-public class Ball {
-    Ellipse2D.Double ball;
-    double x;
-    double y;
-    int speedX;
-    int speedY;
-    double radius;
-    Color ballColor;
+public class Ball extends Thread{
+    private Ellipse2D.Double ball;
+    private Dimension ballDimension;
+    private Point2D.Double ballCoordinates;
+    private Point2D.Double ballVelocity;
+    private int speedX;
+    private int speedY;
+    private Color ballColor;
+    private int radius;
 
-    public Ellipse2D.Double getBall() {
-        return ball;
+    public Ball(double x, double y, int radius, int speedX, int speedY) {
+        this.radius = radius;
+        this.ballColor = getRandomColor();
+        this.speedX = speedX;
+        this.speedY = speedY;
+        ballCoordinates = new Point2D.Double(x, y);
+        ballDimension = new Dimension(radius, radius);
+        ballVelocity = new Point2D.Double(speedX, speedY);
+        createBallObject();
     }
 
-    public double getX() {
-        return x;
+    @Override
+    public void run() {
+        while (true) {
+            updateBallPosition();
+            try {
+                Thread.sleep(15);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public double getY() {
-        return y;
+    private void updateBallPosition() {
+        if (ballCoordinates.getX() + radius >= 1000 - speedX) {
+            speedX *= -1;
+            ballCoordinates.setLocation(1000 - radius, ballCoordinates.getY() + speedY);
+        } else if (ballCoordinates.getY() + radius >= 1000 - speedY) {
+            speedY *= -1;
+            ballCoordinates.setLocation(ballCoordinates.getX() + speedX,
+                    1000 - radius);
+        } else if (ballCoordinates.getX() <= 0){
+            speedX *= -1;
+            ballCoordinates.setLocation( speedX, ballCoordinates.getY() + speedY);
+        } else if (ballCoordinates.getY() <= 0) {
+            speedY *= -1;
+            ballCoordinates
+                    .setLocation(ballCoordinates.getX() + speedX, speedY);
+        } else {
+            ballCoordinates.setLocation(ballCoordinates.getX()+speedX, ballCoordinates.getY()+speedY);
+        }
+
+        setCurrentBallPosition();
     }
 
-    public int getSpeedX() {
-        return speedX;
+    private void createBallObject() {
+        ball = new Ellipse2D.Double(ballCoordinates.getX(),
+                ballCoordinates.getY(), ballDimension.getWidth(),
+                ballDimension.getHeight());
     }
 
-    public int getSpeedY() {
-        return speedY;
+    private void setCurrentBallPosition() {
+        ball.setFrame(ballCoordinates, ballDimension);
+    }
+
+    private Color getRandomColor() {
+        return new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255));
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public Point2D.Double getBallCoordinates() {
+        return ballCoordinates;
     }
 
     public Color getBallColor() {
         return ballColor;
     }
 
-    public Ball(double x, double y){
-        this.x = x;
-        this.y = y;
-        this.radius = getRandomRadius();
-        this.ballColor = getRandomColor();
-        this.speedX = getRandomSpeed();
-        this.speedY = getRandomSpeed();
-        this.ball = new Ellipse2D.Double(x,y,radius,radius);
-
-    }
-    private double getRandomRadius(){
-        return (Math.random()+1)*(1000.0/8.0);
-    }
-    private Color getRandomColor(){
-        return new Color((int) (Math.random() * 255),
-                (int) (Math.random() * 255), (int) (Math.random() * 255));
-    }
-    private int getRandomSpeed(){
-        return (int)(Math.random()+1)*(1000/6);
-    }
-
-    public double getRadius() {
-        return radius;
-    }
 }
