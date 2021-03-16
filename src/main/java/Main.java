@@ -1,4 +1,4 @@
-import steelballs.Ui;
+import painterballs2.Ui;
 
 
 public class Main {

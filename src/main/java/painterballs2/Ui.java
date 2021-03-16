@@ -1,4 +1,4 @@
-package steelballs;
+package painterballs2;
 
 import javax.swing.*;
 import java.awt.*;

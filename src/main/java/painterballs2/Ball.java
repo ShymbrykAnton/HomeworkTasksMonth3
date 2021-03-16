@@ -1,8 +1,9 @@
-package steelballs;
+package painterballs2;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
+import java.util.Objects;
 
 public class Ball extends Thread{
     private Ellipse2D.Double ball;
@@ -10,18 +11,10 @@ public class Ball extends Thread{
     private final Point2D.Double ballCoordinates;
     private int speedX;
     private int speedY;
-    private final Color ballColor;
-    private final int radius;
-    private  int width;
-    private  int height;
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
+    private  Color ballColor;
+    private  int radius;
+    private final int width;
+    private final int height;
 
     public Ball(double x, double y, int radius, int speedX, int speedY, int width, int height) {
         this.width = width;
@@ -82,7 +75,7 @@ public class Ball extends Thread{
         return new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255));
     }
 
-    public double getRadius() {
+    public int getRadius() {
         return radius;
     }
 
@@ -94,4 +87,27 @@ public class Ball extends Thread{
         return ballColor;
     }
 
+    public void setSpeedX(int speedX) {
+        this.speedX = speedX;
+    }
+
+    public void setSpeedY(int speedY) {
+        this.speedY = speedY;
+    }
+
+    public void setBallColor(Color ballColor) {
+        this.ballColor = ballColor;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
+    }
+
+    public int getSpeedX() {
+        return speedX;
+    }
+
+    public int getSpeedY() {
+        return speedY;
+    }
 }

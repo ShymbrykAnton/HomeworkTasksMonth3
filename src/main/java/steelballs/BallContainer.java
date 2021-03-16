@@ -7,13 +7,12 @@ import java.util.ArrayList;
 
 public class BallContainer extends JPanel {
     private final ArrayList<Ball> balls;
-    private final MouseAdapter mouseListener;
     private final JFrame frame;
 
     public BallContainer(JFrame frame){
         this.frame = frame;
         balls = new ArrayList<>();
-        mouseListener = new BallListener(balls, frame);
+        MouseAdapter mouseListener = new BallListener(balls, frame);
         this.addMouseListener(mouseListener);
     }
 
@@ -30,6 +29,8 @@ public class BallContainer extends JPanel {
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         for (Ball ball : balls) {
+            ball.setHeight(frame.getHeight());
+            ball.setWidth(frame.getWidth());
             g2d.setPaint(ball.getBallColor());
             g2d.fillOval((int) ball.getBallCoordinates().getX(),(int) ball.getBallCoordinates().getY(),(int) ball.getRadius(),(int) ball.getRadius());
         }
