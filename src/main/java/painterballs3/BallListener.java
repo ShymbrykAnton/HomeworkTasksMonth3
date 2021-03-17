@@ -34,12 +34,11 @@ public class BallListener extends MouseAdapter {
     }
 
     private int getRandomRadius() {
-        return random.nextInt(
-                Math.min(jFrame.getWidth(), jFrame.getHeight()) / 8 + 1);
+        return random.nextInt((Math.min(jFrame.getWidth(), jFrame.getHeight())/8) + 1);
     }
 
     private int getRandomSpeed(int speed) {
-        int speedConst = speed / 100;
+        int speedConst = speed / 60;
         int randomSpeed = random.nextInt(speedConst * 2) - speedConst;
         return randomSpeed!=0?randomSpeed:getRandomSpeed(speed);
     }

@@ -46,7 +46,7 @@ public class BallContainer extends JPanel {
                        int speedX = ball.getSpeedX()+balls.get(i).getSpeedX();
                        int speedY = ball.getSpeedY()+balls.get(i).getSpeedY();
                        int radius = ball.getRadius()+balls.get(i).getRadius();
-                       balls.get(i).setRadius(radius/2);
+                       balls.get(i).setRadius(radius);
                        balls.get(i).setBallColor(color);
                        balls.get(i).setSpeedX(speedX);
                        balls.get(i).setSpeedY(speedY);
@@ -61,11 +61,12 @@ public class BallContainer extends JPanel {
         }
         balls.remove(remove);
         balls.forEach(ball -> {
+            ball.setHeight(frame.getHeight());
+            ball.setWidth(frame.getWidth());
             g2d.setPaint(ball.getBallColor());
             g2d.fillOval((int) ball.getBallCoordinates().getX(),
                     (int) ball.getBallCoordinates().getY(),
                     (int) ball.getRadius(), (int) ball.getRadius());
         });
-
     }
 }
