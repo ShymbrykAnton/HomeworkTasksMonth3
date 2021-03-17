@@ -7,7 +7,7 @@ import java.awt.geom.Point2D;
 public class Ball extends Thread{
     private Ellipse2D.Double ball;
     private final Dimension ballDimension;
-    private final Point2D.Double ballCoordinates;
+    private Point2D.Double ballCoordinates;
     private int speedX;
     private int speedY;
     private  Color ballColor;
@@ -108,5 +108,9 @@ public class Ball extends Thread{
 
     public int getSpeedY() {
         return speedY;
+    }
+
+    public void setBallCoordinates(Point2D.Double ballCoordinates) {
+        this.ballCoordinates = ballCoordinates;
     }
 }
