@@ -1,4 +1,4 @@
-package calculator;
+package calculator.blogic;
 
 public class BusinessLogic {
 
@@ -12,6 +12,9 @@ public class BusinessLogic {
         return firstNumber+secondNumber;
     }
     public double division(double firstNumber,double secondNumber){
-        return secondNumber!=0?firstNumber/secondNumber:0;
+        if (secondNumber == 0.0) {
+            throw new IllegalArgumentException("На ноль делить нельзя");
+        }
+        return firstNumber/secondNumber;
     }
 }

@@ -14,15 +14,18 @@ public class NumsListener implements ActionListener {
         this.operationText = operationText;
         this.secondNumberText = secondNumberText;
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String textInFieldNow = secondNumberText.getText();
         String setString = textInFieldNow.concat(e.getActionCommand());
-        if(chekJustOneDot(setString)){
+        if (chekJustOneDot(setString)) {
             secondNumberText.setText(setString);
+        } else {
+            secondNumberText.setText(textInFieldNow);
         }
-
     }
+
     private boolean chekJustOneDot(String stringForChek) {
         return stringForChek.matches("^[0-9]*\\.?[0-9]*$");
     }

@@ -13,6 +13,7 @@ public class EditTextFields implements ActionListener {
         this.operationText = operationText;
         this.secondNumberText = secondNumberText;
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()){
@@ -21,8 +22,8 @@ public class EditTextFields implements ActionListener {
                 secondNumberText.setText("");
                 operationText.setText("");
                 break;
-            case "backspace":
-                secondNumberText.setText(secondNumberText.getText().substring(0,secondNumberText.getText().length()-2));
+            case "Backspace":
+                secondNumberText.setText(secondNumberText.getText().substring(0,secondNumberText.getText().length()-1));
                 break;
         }
     }

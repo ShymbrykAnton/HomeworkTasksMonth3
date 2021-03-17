@@ -1,32 +1,12 @@
-package calculator;
+package calculator.view;
 
+import calculator.listeners.EditTextFields;
+import calculator.listeners.NumsListener;
+import calculator.listeners.OperationListener;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 public class Ui {
-
-
-//    JButton clean;
-//    JButton backspace;
-//
-//    JButton button1;
-//    JButton button2;
-//    JButton button3;
-//    JButton button4;
-//    JButton button5;
-//    JButton button6;
-//    JButton button7;
-//    JButton button8;
-//    JButton button9;
-//    JButton button0;
-//    JButton buttonDot;
-//
-//    JButton plus;
-//    JButton minus;
-//    JButton multiply;
-//    JButton division;
-//    JButton enter;
 
     public Ui() {
         JFrame frame = new JFrame("Calculator");
@@ -34,20 +14,23 @@ public class Ui {
         frame.getContentPane().setBackground(new Color(255, 253, 94, 131));
 
         JTextField firstNumberText = new JTextField();
-        firstNumberText.setBounds(0, 0, 500, 80);
+        firstNumberText.setBounds(0, 0, 483, 80);
         firstNumberText.setEditable(false);
         firstNumberText.setBorder(null);
+        firstNumberText.setHorizontalAlignment(SwingConstants.RIGHT);
 
 
         JTextField operationText = new JTextField();
-        operationText.setBounds(0, 80, 500, 80);
+        operationText.setBounds(0, 80, 483, 80);
         operationText.setEditable(false);
         operationText.setBorder(null);
+        operationText.setHorizontalAlignment(SwingConstants.RIGHT);
 
         JTextField secondNumberText = new JTextField();
-        secondNumberText.setBounds(0, 160, 500, 80);
+        secondNumberText.setBounds(0, 160, 483, 80);
         secondNumberText.setEditable(false);
         secondNumberText.setBorder(null);
+        secondNumberText.setHorizontalAlignment(SwingConstants.RIGHT);
 
         JButton cleanBtn = new JButton("C");
         cleanBtn.setBounds(55, 260, 80, 80);
@@ -55,9 +38,10 @@ public class Ui {
         JButton backspaceBtn = new JButton("Backspace");
         backspaceBtn.setBounds(155, 260, 180, 80);
 
-        JButton divisionBtn = new JButton();
+        JButton divisionBtn = new JButton("/");
         divisionBtn.setBounds(355, 260, 80, 80);
-        Icon icon = new ImageIcon("./src/main/java/assets/division.png");
+        Icon icon =
+                new ImageIcon("./src/main/java/calculator/assets/division.png");
         divisionBtn.setIcon(icon);
 
         JButton oneBtn = new JButton("1");
@@ -69,8 +53,9 @@ public class Ui {
         JButton threeBtn = new JButton("3");
         threeBtn.setBounds(255, 360, 80, 80);
 
-        JButton plusBtn = new JButton();
-        Icon icon1 = new ImageIcon("./src/main/java/assets/plus.png");
+        JButton plusBtn = new JButton("+");
+        Icon icon1 =
+                new ImageIcon("./src/main/java/calculator/assets/plus.png");
         plusBtn.setIcon(icon1);
         plusBtn.setBounds(355, 360, 80, 80);
 
@@ -83,8 +68,9 @@ public class Ui {
         JButton sixBtn = new JButton("6");
         sixBtn.setBounds(255, 460, 80, 80);
 
-        JButton minusBtn = new JButton();
-        Icon icon2 = new ImageIcon("./src/main/java/assets/minus.png");
+        JButton minusBtn = new JButton("-");
+        Icon icon2 =
+                new ImageIcon("./src/main/java/calculator/assets/minus.png");
         minusBtn.setIcon(icon2);
         minusBtn.setBounds(355, 460, 80, 80);
 
@@ -97,8 +83,9 @@ public class Ui {
         JButton nineBtn = new JButton("9");
         nineBtn.setBounds(255, 560, 80, 80);
 
-        JButton multiplyBtn = new JButton();
-        Icon icon3 = new ImageIcon("./src/main/java/assets/multiply.png");
+        JButton multiplyBtn = new JButton("*");
+        Icon icon3 =
+                new ImageIcon("./src/main/java/calculator/assets/multiply.png");
         multiplyBtn.setIcon(icon3);
         multiplyBtn.setBounds(355, 560, 80, 80);
 
@@ -106,12 +93,12 @@ public class Ui {
         enter.setBounds(55, 660, 180, 80);
 
         JButton zeroBtn = new JButton("0");
-        zeroBtn.setBounds(255, 660, 80 , 80);
+        zeroBtn.setBounds(255, 660, 80, 80);
 
-        JButton dotButton = new JButton();
-        Icon icon4 = new ImageIcon("./src/main/java/assets/dot.png");
-        dotButton.setIcon(icon4);
-        dotButton.setBounds(355, 660, 80 , 80);
+        JButton dotBtn = new JButton(".");
+        Icon icon4 = new ImageIcon("./src/main/java/calculator/assets/dot.png");
+        dotBtn.setIcon(icon4);
+        dotBtn.setBounds(355, 660, 80, 80);
 
         frame.add(firstNumberText);
         frame.add(operationText);
@@ -133,7 +120,7 @@ public class Ui {
         frame.add(multiplyBtn);
         frame.add(enter);
         frame.add(zeroBtn);
-        frame.add(dotButton);
+        frame.add(dotBtn);
 
         Font font = firstNumberText.getFont();
         firstNumberText.setFont(font.deriveFont(15.0f));
@@ -152,6 +139,38 @@ public class Ui {
         nineBtn.setFont(font.deriveFont(25.0f));
         zeroBtn.setFont(font.deriveFont(25.0f));
         enter.setFont(font.deriveFont(80.0f));
+        divisionBtn.setFont(font.deriveFont(0.1f));
+        plusBtn.setFont(font.deriveFont(0.1f));
+        minusBtn.setFont(font.deriveFont(0.1f));
+        multiplyBtn.setFont(font.deriveFont(0.1f));
+        dotBtn.setFont(font.deriveFont(0.1f));
+        firstNumberText.setFont(font.deriveFont(40.0f));
+        operationText.setFont(font.deriveFont(40.0f));
+        secondNumberText.setFont(font.deriveFont(40.0f));
+
+        NumsListener numsListener = new NumsListener(firstNumberText, operationText, secondNumberText);
+        oneBtn.addActionListener(numsListener);
+        twoBtn.addActionListener(numsListener);
+        threeBtn.addActionListener(numsListener);
+        fourBtn.addActionListener(numsListener);
+        fiveBtn.addActionListener(numsListener);
+        sixBtn.addActionListener(numsListener);
+        sevenBtn.addActionListener(numsListener);
+        eightBtn.addActionListener(numsListener);
+        nineBtn.addActionListener(numsListener);
+        zeroBtn.addActionListener(numsListener);
+        dotBtn.addActionListener(numsListener);
+
+        OperationListener operationListener = new OperationListener(firstNumberText, operationText, secondNumberText);
+        divisionBtn.addActionListener(operationListener);
+        plusBtn.addActionListener(operationListener);
+        minusBtn.addActionListener(operationListener);
+        multiplyBtn.addActionListener(operationListener);
+        enter.addActionListener(operationListener);
+
+        EditTextFields editTextFields = new EditTextFields(firstNumberText, operationText, secondNumberText);
+        cleanBtn.addActionListener(editTextFields);
+        backspaceBtn.addActionListener(editTextFields);
 
         frame.setSize(500, 800);
         frame.setLayout(null);
