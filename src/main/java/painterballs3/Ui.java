@@ -9,7 +9,7 @@ public class Ui {
         JFrame jFrame = new JFrame("SteelBalls");
         jFrame.pack();
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        jFrame.setBackground(Color.DARK_GRAY);
+        jFrame.setBackground(Color.PINK);
         jFrame.setVisible(true);
         jFrame.setSize(1000,1000);
         jFrame.setLocationRelativeTo(null);

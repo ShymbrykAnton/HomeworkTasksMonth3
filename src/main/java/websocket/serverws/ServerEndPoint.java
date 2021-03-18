@@ -1,4 +1,4 @@
-package websocket;
+package websocket.serverws;
 
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
@@ -17,10 +17,10 @@ public class ServerEndPoint {
 
     @OnWebSocketConnect
     public void onConnect(Session session){
-        System.out.println(session);
         onText(session,"Someone connected!!!");
         this.session = session;
         sessionList.add(session);
+        System.out.println("Количество подключенных юзеров: " + sessionList.size());
     }
 
     @OnWebSocketMessage
