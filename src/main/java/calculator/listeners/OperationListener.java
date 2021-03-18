@@ -64,6 +64,13 @@ public class OperationListener implements ActionListener {
     }
 
     private void choseOperationAndCalculate() {
+        if(firstNumberText.getText().equals(".")){
+            firstNumberText.setText("");
+            operationText.setText("");
+            secondNumberText.setText("");
+            printErrorMessage("Что ты собрался делать с точкой?");
+            return;
+        }
         switch (operationText.getText()) {
             case "+":
                 cleanFieldAndSetAnswer(businessLogic
@@ -91,10 +98,14 @@ public class OperationListener implements ActionListener {
                     firstNumberText.setText("");
                     operationText.setText("");
                     secondNumberText.setText("");
-                    Icon errorIcon = new ImageIcon("./src/main/java/calculator/assets/Error.png");
-                    JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE, errorIcon);
+                    printErrorMessage(e.getMessage());
                 }
                 break;
         }
+    }
+
+    private void printErrorMessage(String message) {
+        Icon errorIcon = new ImageIcon("./src/main/java/calculator/assets/Error.png");
+        JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE, errorIcon);
     }
 }
