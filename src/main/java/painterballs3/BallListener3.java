@@ -1,4 +1,4 @@
-package painterballs2;
+package painterballs3;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -6,14 +6,14 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Random;
 
-public class BallListener extends MouseAdapter {
-    private volatile List<Ball> balls;
+public class BallListener3 extends MouseAdapter {
+    private volatile List<Ball3> ball3s;
     private final Random random = new Random();
     private final JFrame jFrame;
 
-    public BallListener(List<Ball> balls, JFrame frame) {
+    public BallListener3(List<Ball3> ball3s, JFrame frame) {
         this.jFrame = frame;
-        this.balls = balls;
+        this.ball3s = ball3s;
 
     }
 
@@ -25,21 +25,20 @@ public class BallListener extends MouseAdapter {
         int y = e.getY() - radius / 2;
         int speedX = getRandomSpeed(jFrame.getWidth());
         int speedY = getRandomSpeed(jFrame.getHeight());
-        Ball ball = new Ball(x, y, radius, speedX, speedY, jFrame.getWidth(),
+        Ball3 ball3 = new Ball3(x, y, radius, speedX, speedY, jFrame.getWidth(),
                 jFrame.getHeight());
-        Thread thread = new Thread(ball);
-        balls.add(ball);
+        Thread thread = new Thread(ball3);
+        ball3s.add(ball3);
         thread.start();
 
     }
 
     private int getRandomRadius() {
-        return random.nextInt(
-                Math.min(jFrame.getWidth(), jFrame.getHeight()) / 8 + 1);
+        return random.nextInt((Math.min(jFrame.getWidth(), jFrame.getHeight())/8) + 1);
     }
 
     private int getRandomSpeed(int speed) {
-        int speedConst = speed / 100;
+        int speedConst = speed / 60;
         int randomSpeed = random.nextInt(speedConst * 2) - speedConst;
         return randomSpeed!=0?randomSpeed:getRandomSpeed(speed);
     }

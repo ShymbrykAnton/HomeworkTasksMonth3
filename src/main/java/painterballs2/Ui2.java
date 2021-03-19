@@ -1,24 +1,24 @@
-package steelballs;
+package painterballs2;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class Ui {
+public class Ui2 {
 
-    public Ui() {
-        JFrame jFrame = new JFrame("SteelBalls");
+    public Ui2() {
+        JFrame jFrame = new JFrame("PainterBalls2");
         jFrame.pack();
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jFrame.setBackground(Color.PINK);
         jFrame.setVisible(true);
         jFrame.setSize(1000,1000);
         jFrame.setLocationRelativeTo(null);
-        BallContainer ballContainer =  new BallContainer(jFrame);
-        jFrame.add(ballContainer);
+        BallContainer2 ballContainer2 =  new BallContainer2(jFrame);
+        jFrame.add(ballContainer2);
 
         while (true){
             jFrame.repaint();
-            ballContainer.moveBall();
+            ballContainer2.moveBall();
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -28,7 +28,7 @@ public class Ui {
     }
 
     public static void main(String[] args) {
-        Ui ui = new Ui();
+        Ui2 ui2 = new Ui2();
     }
 
 }
