@@ -35,8 +35,5 @@ public class BallContainer1 extends JPanel {
             g2d.fillOval((int) ball1.getBallCoordinates().getX(),(int) ball1.getBallCoordinates().getY(),(int) ball1
                     .getDiameter(),(int) ball1.getDiameter());
         }
-
     }
-
-
 }
