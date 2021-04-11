@@ -3,6 +3,7 @@ package calculator.listeners;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 public class EditTextFields implements ActionListener {
    private final JTextField firstNumberText;
@@ -13,6 +14,7 @@ public class EditTextFields implements ActionListener {
         this.operationText = operationText;
         this.secondNumberText = secondNumberText;
     }
+    Random random = new Random();
 
     @Override
     public void actionPerformed(ActionEvent e) {

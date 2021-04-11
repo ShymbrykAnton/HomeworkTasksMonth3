@@ -26,7 +26,8 @@ public class SimpleWebSocketClient {
 
     @OnMessage
     public void onMessage(Session session,String message){
-        System.out.println(message);
+       StringBuilder stringBuilder = new StringBuilder();
+       System.out.println(message);
     }
 
     @OnClose
