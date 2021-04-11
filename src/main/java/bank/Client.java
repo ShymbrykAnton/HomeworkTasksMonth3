@@ -1,5 +1,6 @@
 package bank;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -12,6 +13,7 @@ public class Client implements Runnable {
     private int creditBalance;
     private final Bank bank;
     private final Lock lock = new ReentrantLock();
+    private final Random random = new Random();
 
     public Client(Bank bank) {
         this.bank = bank;
@@ -32,10 +34,10 @@ public class Client implements Runnable {
                 condition.await(this.takeCredit(), TimeUnit.SECONDS);
                 bank.returnCredit(creditBalance, this);
                 condition.await(this.takeMoneyOnDeposit(), TimeUnit.SECONDS);
-                bank.returnDeposit(depositBalance,this);
+                bank.returnDeposit(depositBalance, this);
             } else {
                 condition.await(this.takeMoneyOnDeposit(), TimeUnit.SECONDS);
-                bank.returnDeposit(depositBalance,this);
+                bank.returnDeposit(depositBalance, this);
                 condition.await(this.takeCredit(), TimeUnit.SECONDS);
                 bank.returnCredit(creditBalance, this);
             }
@@ -58,17 +60,24 @@ public class Client implements Runnable {
     }
 
     public int takeCredit() {
-        int creditValue = (int) (Math.random() * 19_499) + 500;
+        int creditValue = random.nextInt(19_500) + 500;
+        if ((creditValue + creditValue / 2) >= moneyBalance) {
+            creditValue = moneyBalance - (moneyBalance / 2);
+        }
         bank.giveCreditIfPossible(creditValue, this);
         return (int) (Math.random() * 36) + 12;
     }
 
     public int takeMoneyOnDeposit() {
-        int depositValue = (int) (Math.random() * 19_499) + 500;
+        int depositValue = random.nextInt(19_000) + 1000;
+        ;
         if (depositValue > moneyBalance) {
             depositValue = moneyBalance;
         }
         bank.giveDeposit(depositValue, this);
+        if (depositValue < 0) {
+            System.out.println("HUI");
+        }
         return (int) (Math.random() * 36) + 12;
     }
 

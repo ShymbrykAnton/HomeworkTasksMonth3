@@ -15,21 +15,25 @@ public class Main {
         Client client = null;
         Lock lock = new ReentrantLock();
         int count =0;
+        Cashier cashier = new Cashier(bank);
 
         ThreadFactory threadFactory = Executors.defaultThreadFactory();
-        ExecutorService executorService = Executors.newFixedThreadPool(10, threadFactory);
+        ExecutorService executorService = Executors.newFixedThreadPool(10_000, threadFactory);
 
-        while (count<=10) {
+       ScheduledExecutorService kasirExecutor = Executors.newScheduledThreadPool(1);
+       kasirExecutor.scheduleWithFixedDelay(cashier,1,5,TimeUnit.SECONDS);
+        while (count<=10_000) {
             try {
                 lock.lock();
                 client = new Client(bank);
                 Condition condition = lock.newCondition();
                 executorService.execute(threadFactory.newThread(client));
-                condition.await(20, TimeUnit.MILLISECONDS);
+                condition.await(10, TimeUnit.MILLISECONDS);
                 count++;
             } finally {
                 lock.unlock();
             }
         }
+
     }
 }
