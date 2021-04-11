@@ -7,32 +7,41 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Client implements Runnable {
 
-    private  int moneyBalance;
-    private  int depositBalance;
-    private  int creditBalance;
+    private int moneyBalance;
+    private int depositBalance;
+    private int creditBalance;
     private final Bank bank;
     private final Lock lock = new ReentrantLock();
 
     public Client(Bank bank) {
         this.bank = bank;
-        this.moneyBalance =  (int) (Math.random()*30_000) +1;;
+        this.moneyBalance = (int) (Math.random() * 30_000) + 1;
+        ;
         this.depositBalance = 0;
         this.creditBalance = 0;
     }
 
     @Override
     public void run() {
-        Thread thread = new Thread(this);
-        thread.setName(this.toString());
-        thread.start();
+        Thread.currentThread().setName(this.toString());
         try {
-            if(lock.tryLock(10,TimeUnit.SECONDS)){
-            this.takeCredit();
+            lock.lock();
+            Condition condition = lock.newCondition();
+            int random = (int) (Math.random() * 100);
+            if (random < 50) {
+                condition.await(this.takeCredit(), TimeUnit.SECONDS);
+                bank.returnCredit(creditBalance, this);
+                condition.await(this.takeMoneyOnDeposit(), TimeUnit.SECONDS);
+                bank.returnDeposit(depositBalance,this);
+            } else {
+                condition.await(this.takeMoneyOnDeposit(), TimeUnit.SECONDS);
+                bank.returnDeposit(depositBalance,this);
+                condition.await(this.takeCredit(), TimeUnit.SECONDS);
+                bank.returnCredit(creditBalance, this);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             lock.unlock();
         }
 
@@ -47,16 +56,20 @@ public class Client implements Runnable {
                 ", creditBalance=" + creditBalance +
                 '}';
     }
-    public void takeCredit(){
-        int creditValue  = (int)(Math.random()*19_499)+500;
-        bank.giveCreditIfPossible(creditValue,this);
-        int timeCredit = (int)(Math.random()*360)+120;
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
+    public int takeCredit() {
+        int creditValue = (int) (Math.random() * 19_499) + 500;
+        bank.giveCreditIfPossible(creditValue, this);
+        return (int) (Math.random() * 36) + 12;
+    }
+
+    public int takeMoneyOnDeposit() {
+        int depositValue = (int) (Math.random() * 19_499) + 500;
+        if (depositValue > moneyBalance) {
+            depositValue = moneyBalance;
+        }
+        bank.giveDeposit(depositValue, this);
+        return (int) (Math.random() * 36) + 12;
     }
 
     public int getMoneyBalance() {

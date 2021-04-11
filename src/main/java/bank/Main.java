@@ -1,26 +1,35 @@
 package bank;
 
+import org.apache.logging.log4j.core.util.ExecutorServices;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
         Bank bank = new Bank();
         Client client = null;
-        int counter = 0;
-        ThreadFactory threadFactory = Executors.defaultThreadFactory();
-        LinkedBlockingDeque<Runnable> taskList = new LinkedBlockingDeque<>();
-        ExecutorService executorService = new ThreadPoolExecutor(0, 10_000, 10, TimeUnit.MINUTES, taskList, threadFactory);
-        while (counter <= 10_000) {
-            client = new Client(bank);
-//            threadFactory.newThread(client);
-            counter++;
-            System.out.println(taskList.size());
-//            System.out.println(counter);
-        }
-            Runnable task = client;
-            executorService.execute(client);
+        Lock lock = new ReentrantLock();
+        int count =0;
 
+        ThreadFactory threadFactory = Executors.defaultThreadFactory();
+        ExecutorService executorService = Executors.newFixedThreadPool(10, threadFactory);
+
+        while (count<=10) {
+            try {
+                lock.lock();
+                client = new Client(bank);
+                Condition condition = lock.newCondition();
+                executorService.execute(threadFactory.newThread(client));
+                condition.await(20, TimeUnit.MILLISECONDS);
+                count++;
+            } finally {
+                lock.unlock();
+            }
+        }
     }
 }
