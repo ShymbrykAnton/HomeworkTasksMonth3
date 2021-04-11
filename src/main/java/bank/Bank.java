@@ -1,5 +1,7 @@
 package bank;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -90,5 +92,25 @@ public class Bank {
 
     public AtomicInteger getDepositSum() {
         return depositSum;
+    }
+
+    public void giveCreditIfPossible(int creditValue,Client client){
+        if(balance.get()>creditValue){
+            int currentBalance = balance.get();
+            balance.compareAndSet(currentBalance, currentBalance-creditValue);
+            creditCount.compareAndSet(creditCount.get(),creditCount.get()+1);
+            creditSum.compareAndSet(creditSum.get(),creditSum.get()+creditValue);
+                System.out.println(client + "Have credit "+ creditValue);
+
+                client.setCreditBalance(client.getCreditBalance()+ creditValue);
+                client.setMoneyBalance(client.getMoneyBalance()+creditValue);
+        }
+        else {
+            try {
+               Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
